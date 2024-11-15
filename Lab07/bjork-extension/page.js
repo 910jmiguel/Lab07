@@ -66,7 +66,7 @@ if (mydomain.includes("yorku")) {
     if (type) words = BJORK; //select the right keys and values
     else words = UNBJORK;
 
-    if (node.nodeType == Node.TEXT_NODE){ //is the node a text node?
+    if (node.nodeType == Node.TEXT_NODE) { //is the node a text node?
 
       // The code below will wrap the node in a DOM span element of class 'bjork', 
       // if this has not already been done.
@@ -82,12 +82,27 @@ if (mydomain.includes("yorku")) {
       // -- Search for words that are keys in the the "words" dictionary variable. 
       // -- Replace words that are keys with the corresponding words that are **values**. 
       // -- Then, replace the nodes 'textContent' with your adjusted string.
+      let text = node.textContent;
+      let wordArray = text.split(" ");
 
+      for (let i = 0; i < wordArray.length; i++) {
+        if (words[wordArray[i]] !== undefined) {
+          wordArray[i] = words[wordArray[i]];
+        } 
+      }
+
+      let newText = wordArray.join(" ");
+      node.textContent = newText;
     }
 
     // WRITE CODE HERE TO:
     // -- Access the children of the node
     // -- Call textTransform recursively on all of these children.
+    let child = node.childNodes;
+
+    for (let i = 0; i < child.length; i++) {
+      transformTextNodes(child[i], type);
+    }
 
   }
 
@@ -101,7 +116,9 @@ if (mydomain.includes("yorku")) {
    * @param {Object} event, the mouse event triggering the function
    */
    function onmouseover(event){
-    // WRITE YOUR CODE HERE!
+    const element1 = event.currentTarget;
+    element1.style.backgroundImage = `url(${BG})`;
+    targetElement.style.opacity = '0.8';
   }
 
     /** onmouseout. This will NOT be a recursive function.
@@ -114,7 +131,9 @@ if (mydomain.includes("yorku")) {
    * @param {Object} event, the mouse event triggering the function
    */
   function onmouseout(event){
-    // WRITE YOUR CODE HERE!
+    const element2 = event.currentTarget;
+    element2.style.backgroundImage = '';
+    element2.style.opacity = '';
   }
 
   /** BjorkIt
